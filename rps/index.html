@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Rock, Paper, Scissors</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            let p_score = 0, c_score = 0
+            var choices = ['Rock', 'Paper', 'Scissors']
+
+            function computerPlay() {
+                return choices[Math.floor(Math.random()*3)]
+            }
+            function playRound(playerSelection, computerSelection) {
+                p_choice = playerSelection.toLowerCase()
+                c_choice = computerSelection.toLowerCase()
+                if (p_choice == "rock" && c_choice == "scissors"){
+                    p_score+=1;
+                    return "You win! Rock beats Scissors.";
+                }
+                else if (p_choice == "scissors" && c_choice == "rock"){
+                    c_score+=1;
+                    return "You lose! Rock beats Scissors.";
+                }
+                else if (p_choice == "paper" && c_choice == "rock"){
+                    p_score+=1;
+                    return "You win! Paper beats Rock.";
+                }
+                else if (p_choice == "rock" && c_choice == "paper"){
+                    c_score+=1;
+                    return "You lose! Paper beats Rock.";
+                }
+                else if (p_choice == "scissors" && c_choice == "paper"){
+                    p_score+=1;                
+                    return "You win! Scissors beats Paper.";
+                }
+                else if (p_choice == "paper" && c_choice === "scissors"){
+                    c_score+=1;
+                    return "You lose! Scissors beats Paper.";
+                }
+                // ties
+                else if (p_choice === c_choice ){
+                    return "Tie!";
+                }
+                else if (playerSelection == null || playerSelection == ""){
+                    alert("Please enter a valid selection");
+                    playRound(user_input, computerPlay());
+                    return;
+                }
+            }
+            function game() {
+                for (i = 1; i <= 5; i++){
+                    console.log(`Round ${i}:`);             
+                    let result = playRound(prompt("Rock, Paper, or Scissors?", "rock"),
+                                computerPlay());
+                    console.log(`Result: ${result}`); 
+                    console.log(`Score: Player: ${p_score} | Computer: ${c_score}`);
+                    console.log("\n");
+                }
+            }
+            game()
+            console.log(`Final Score: Player: ${p_score} | Computer: ${c_score}`);
+        </script>
+    </body>
+</html>
