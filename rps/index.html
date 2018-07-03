@@ -3,12 +3,95 @@
     <head>
         <meta charset="utf-8">
         <title>Rock, Paper, Scissors</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto+Slab">
+        <style>
+            .navbar {
+                background-color: #3EE0F0;
+                border-bottom: 2px solid #66C4DB;
+                color: white;
+            }
+            .container-fluid {
+                background:
+                    linear-gradient(135deg, #708090 22px, #ffffff 22px, 
+                        #fff 24px, transparent 24px, transparent 67px, #fff 67px, 
+                        #d9ecff 69px, transparent 69px),
+                    linear-gradient(225deg, #3EE0F0 22px, #d9ecff 22px, 
+                        #d9ecff 24px, transparent 24px, transparent 67px, #d9ecff 67px, 
+                        #d9ecff 69px, transparent 69px) 0 64px;
+                    background-color:rgba(112, 128, 144, 1);
+                    background-size: 64px 128px
+            }
+            .svg {
+                width: 100%;
+                height: auto;
+            }
+            .choices .col {
+                background-color: white;
+                border-radius: 1em;
+                height: 450px;
+                margin-left:0.75em;
+                margin-right:0.75em;
+                margin-top: 1em;
+                transition: 500ms ease all;
+            }
+            #title {
+                font-family: 'Roboto Slab', serif;
+                font-size: 1.5em;
+            }
+            #result {
+                font-family: 'Roboto Slab', serif;
+                font-size: 2em;
+            }
+            .result .col {
+                background-color: white;
+                border-radius: 1em;
+                height: 135px;
+                margin-top: 1.5em;
+                margin-left:0.75em;
+                margin-right:0.75em;
+                padding-top: 2.5em;
+            }
+            #rock:hover, #paper:hover, #scissors:hover {
+                margin-top: 0.65em;
+                cursor: pointer;
+            }
+        </style>
     </head>
-    <body>
+    <body class="container-fluid"> 
+        <nav class="navbar row">
+            <a class="navbar-brand text-center col">RockPaperScissors.</a>
+        </nav>
+        <div class="row choices">
+            <div class="col text-center" id="rock">
+                <img src="img/rock.svg" class="svg">
+                <span id="title">Rock</span>
+            </div>
+            <div class="col middle text-center" id="paper">
+                <img src="img/paper.svg" class="svg">
+                <span id="title">Paper</span>
+            </div>
+            <div class="col text-center" id="scissors">
+                <img src="img/scissors.svg" class="svg">
+                <span id="title">Scissors</span>
+            </div>
+        </div>
+        <div class="row result">
+            <div class="col text-center align-middle">
+                <span id="result"></span>
+            </div>
+        </div>
         <script type="text/javascript">
             let p_score = 0, c_score = 0
+            let message = '', outstring = `${p_score} - ${c_score} \n ${message}`;
+            document.getElementById('result').textContent = 
+                    `${p_score} - ${c_score} \n ${message}`;
             var choices = ['Rock', 'Paper', 'Scissors']
-
             function computerPlay() {
                 return choices[Math.floor(Math.random()*3)]
             }
@@ -29,7 +112,7 @@
                 }
                 else if (p_choice == "rock" && c_choice == "paper"){
                     c_score+=1;
-                    return "You lose! Paper beats Rock.";
+                    return  "You lose! Paper beats Rock.";
                 }
                 else if (p_choice == "scissors" && c_choice == "paper"){
                     p_score+=1;                
@@ -37,7 +120,7 @@
                 }
                 else if (p_choice == "paper" && c_choice === "scissors"){
                     c_score+=1;
-                    return "You lose! Scissors beats Paper.";
+                    return"You lose! Scissors beats Paper.";
                 }
                 // ties
                 else if (p_choice === c_choice ){
@@ -49,18 +132,40 @@
                     return;
                 }
             }
-            function game() {
-                for (i = 1; i <= 5; i++){
-                    console.log(`Round ${i}:`);             
-                    let result = playRound(prompt("Rock, Paper, or Scissors?", "rock"),
-                                computerPlay());
-                    console.log(`Result: ${result}`); 
-                    console.log(`Score: Player: ${p_score} | Computer: ${c_score}`);
-                    console.log("\n");
-                }
+            // function game() {
+            //     // let result = playRound(prompt("Rock, Paper, or Scissors?", "rock"),
+            //         //             computerPlay());
+
+                    
+            //     console.log(`Score: Player: ${p_score} | Computer: ${c_score}`);
+            //     console.log("\n");
+            // }
+            // game()
+            function updateRock() {
+                let thing = playRound('rock', computerPlay());
+                document.getElementById('result').textContent = 
+                    `${p_score} - ${c_score} \n ${thing}`;
             }
-            game()
-            console.log(`Final Score: Player: ${p_score} | Computer: ${c_score}`);
+            function updatePaper() {
+                let thing = playRound('paper', computerPlay());
+                document.getElementById('result').textContent = 
+                    `${p_score} - ${c_score} \n ${thing}`;
+            }
+            function updateScis() {
+                let thing = playRound('scissors', computerPlay());
+                document.getElementById('result').textContent = 
+                    `${p_score} - ${c_score} \n ${thing}`;
+            }
+            $('#rock').on('click', updateRock);
+            $('#paper').on('click', updatePaper);
+            $('#scissors').on('click',  updateScis);
+            if( p_score % 5 == 0 && p_score > 0) {
+                document.getElementById('result').textContent = 
+                    `${p_score} - ${c_score} \n You win! Refresh the site to play again.`;
+            } else if(c_score % 5 == 0 && c_score > 0) {
+                document.getElementById('result').textContent = 
+                    `${p_score} - ${c_score} \n You lose... Refresh the site to play again.`;
+            }
         </script>
     </body>
 </html>
