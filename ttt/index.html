@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Etch-a-sketch &trade;</title>
+        <link rel="icon" type="image/png" href="../img/logo.svg">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto+Slab">
+        <style>
+            .navbar {
+                background: 
+                    -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); 
+                    /* FF3.6-15 */
+                background: 
+                    -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); 
+                    /* Chrome10-25,Safari5.1-6 */
+                background: 
+                    linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); 
+                    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                height: 15vh;
+            }
+            .container-fluid {
+                background: 
+                    radial-gradient(circle, transparent 20%, slategray 20%, 
+                        slategray 80%, transparent 80%, transparent),
+                    radial-gradient(circle, transparent 20%, slategray 20%, 
+                        slategray 80%, transparent 80%, transparent) 50px 50px,
+                    linear-gradient(#A8B1BB 8px, transparent 8px) 0 -4px,
+                    linear-gradient(90deg, #A8B1BB 8px, transparent 8px) -4px 0;
+                    background-color: slategray;
+                    background-size:100px 100px, 100px 100px, 50px 50px, 50px 50px;
+            }
+            button {
+                background: transparent;
+                border: none;
+                color: white;
+                font-family: 'Roboto Slab', serif;
+                font-size: 1.5em;
+            }
+            
+            .ttt {
+                width: 600px;
+                height: 600px;
+                border-style: solid;
+                margin-top: -3vh;
+                display: grid;
+                grid-template-columns: repeat(var(--columnNumber), 1fr);
+                background-color: white;
+            }
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .center-block {
+                margin-left: auto;
+                margin-right: auto;
+                display: table
+                
+            }
+            .item {
+                background-color: rgb(255, 255, 255);
+            }
+        </style>
+    </head>
+    <body class="container-fluid"> 
+        <nav class="navbar row">
+            <div class='col'>
+                <div class="center-block">
+                    <button id="new">New Sketch</button>
+                    <button id="clear">Clear</button>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col">
+                <div class="ttt center"></div>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+            let currentSize = 16;
+            let board = document.querySelector('.ttt');
+
+            document.getElementById('new').onclick = function() {
+                draw(prompt('What dimensions do you want this square to be at?', currentSize))
+            }
+            document.getElementById('clear').onclick = function() {
+                draw(currentSize)
+            }
+
+            function updateColor() {
+                let rgb = [];
+                for(let i = 0; i < 3; i++){
+                    let value = Math.floor(Math.random() * 255);
+                    console.log(value);
+                    rgb[i] = value;
+                }
+                return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+            }
+            function clearGame() {
+                while(board.hasChildNodes()){
+                    board.removeChild(board.lastChild);
+                }
+            }
+            function draw(size = 16) {
+                clearGame();
+                currentSize = size;
+                document.body.style.setProperty('--columnNumber', size);
+                for(let j = 0; j < size**2; j++) {
+                    let new_Lment = document.createElement('div');
+                    new_Lment.classList.add('item');
+
+                    new_Lment.addEventListener('mouseover', function() {
+                        console.log(new_Lment.style.backgroundColor)
+
+                        new_Lment.style.backgroundColor = updateColor();
+                    });
+                    board.appendChild(new_Lment);
+                }
+            }
+            draw()
+        </script>
+    </body>
+</html>
