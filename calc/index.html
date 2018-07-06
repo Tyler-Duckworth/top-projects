@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Calculator.</title>
+        <link rel="icon" type="image/png" href="../img/logo.svg">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto+Slab">
+        <style>
+            .navbar {
+                background: 
+                    #C3ECFF;
+                border-bottom: 2px solid #D6ECFF;
+                height: 10vh;
+            }
+            .navbar-brand {
+                font-family: 'Roboto Slab', serif;
+                color: #F0F0F0;
+            }
+            .container-fluid {
+                background-color:#B5DBED;
+                background-image: 
+                    linear-gradient(30deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),
+                    linear-gradient(150deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),
+                    linear-gradient(30deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),
+                    linear-gradient(150deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),
+                    linear-gradient(60deg, #9DB3C9 25%, transparent 25.5%, transparent 75%, #9DB3C9 75%, #9DB3C9), 
+                    linear-gradient(60deg, #9DB3C9 25%, transparent 25.5%, transparent 75%, #9DB3C9 75%, #9DB3C9);
+                background-size:80px 140px;
+                background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            }
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .grid {
+                margin-top: 7.5vh;
+                height: 75vh;
+                display: grid;
+                grid-gap: 10px;
+                background: 
+                    -moz-linear-gradient(top, rgba(255,255,255,1) 0%, 
+                        rgba(255,255,255,0) 100%); /* FF3.6-15 */
+                background: 
+                    -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,
+                        rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+                background: 
+                    linear-gradient(to bottom, rgba(255,255,255,1) 0%,
+                        rgba(255,255,255,0) 100%); 
+
+                grid-template-columns: auto auto auto auto; 
+                width: 50vw;
+            }
+            .out {
+                grid-column-start: 1;
+                grid-column-end: 4;
+                font-family: 'Roboto Slab', serif;
+            }
+            .zero {
+                grid-column-start: 1;
+                grid-column-end: 3;
+            }
+            .grid > span {
+                text-align: center;
+                font-size: 30px;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+            button {
+                font-family: 'Roboto Slab', serif;
+                background: #3498db;
+                background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+                background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+                background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+                background-image: -o-linear-gradient(top, #3498db, #2980b9);
+                background-image: linear-gradient(to bottom, #3498db, #2980b9);
+                -webkit-border-radius: 28;
+                -moz-border-radius: 28;
+                border-radius: 28px;
+                font-family: Arial;
+                color: #ffffff;
+                font-size: 20px;
+                padding: 10px 20px 10px 20px;
+                text-decoration: none;
+            }
+
+            button:hover {
+                background: #3cb0fd;
+                background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+                background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+                background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+                background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+                background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body class="container-fluid"> 
+        <nav class="navbar row">
+            <a class="navbar-brand text-center col">Calculator.</a>
+        </nav>
+        <div class="row">
+            <div class="col">
+                <div class="grid center">
+                    <span class="out"></span>
+                    <span id="clear" class="align-top"><button>Clear</button></span>
+
+                    <span id="one" class="align-top"><button>1</button></span>
+                    <span id="two" class="align-top"><button>2</button></span>
+                    <span id="three" class="align-top"><button>3</button></span>
+                    <span id="plus" class="align-top"><button>+</button></span>
+                    
+                    <span id="four" class="align-top"><button>4</button></span>
+                    <span id="five" class="align-top"><button>5</button></span>
+                    <span id="six" class="align-top"><button>6</button></span>
+                    <span id="minus" class="align-top"><button>-</button></span>
+
+                    <span id="seven" class="align-top"><button>7</button></span>
+                    <span id="eight" class="align-top"><button>8</button></span>
+                    <span id="nine" class="align-top"><button>9</button></span>
+                    <span id="times" class="align-top"><button>*</button></span>
+
+                    <span id="decimal" class="align-top"><button>.</button></span>
+                    <span id="zero" class="align-top"><button>0</button></span>
+                    <span id="equal" class="align-top"><button>=</button></span>
+                    <span id="divide" class="align-top"><button>%</button></span>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+        let output = 'Output Goes Here';
+        let input = '';
+        let operators = ['*', '/', '+', '-']
+
+        document.getElementById('one').onclick = function() { input += '1'; update() }
+        document.getElementById('two').onclick = function() { input += '2'; update() }
+        document.getElementById('three').onclick = function() { input += '3'; update() }
+        document.getElementById('four').onclick = function() { input += '4'; update() }
+        document.getElementById('five').onclick = function() { input += '5'; update() }
+        document.getElementById('six').onclick = function() { input += '6'; update() }
+        document.getElementById('seven').onclick = function() { input += '7'; update() }
+        document.getElementById('eight').onclick = function() { input += '8'; update() }
+        document.getElementById('nine').onclick = function() { input += '9'; update() }
+        document.getElementById('zero').onclick = function() { input += '0'; update() }
+        document.getElementById('decimal').onclick = function() { input += '.'; update() }
+
+        document.getElementById('plus').onclick = function() { input += ' + '; update() }
+        document.getElementById('minus').onclick = function() { input += ' - '; update() }
+        document.getElementById('times').onclick = function() { input += ' * '; update() }
+        document.getElementById('divide').onclick = function() { input += ' / '; update()}
+
+        document.getElementById('equal').onclick = function() { 
+            let occurences = input.match(/(\* | \/ | \+ | \-)/g);
+
+            let split = input.split(' ');
+            for(let i = 0; i < operators.length; i++) {
+                let position = split.indexOf(operators[i]);
+                if(position > -1) {
+                    split[position+1] = operate(operators[i], 
+                        parseInt(split[position-1]), parseInt(split[position+1]));
+                    split.splice(position-1, 2)
+                }
+            }
+            output = split[0];
+
+            input = '';
+            document.querySelector('.out').textContent = output;
+            //Process the string;
+            //Detect the number of operators
+            //If that is above 1, take the numbers around the first operand (in PEMDAS) and do the operation.
+        }
+        document.getElementById('clear').onclick = function() { document.querySelector('.out').textContent = ''; output, input = '' }
+        
+        function update(symbol='') {
+            document.querySelector('.out').textContent = input;
+        }
+
+        function add(arg_0, arg_1) { return arg_0 + arg_1 }
+        function subtract(arg_0, arg_1) { return arg_0 - arg_1 }
+        function muliply(arg_0, arg_1) { return arg_0 * arg_1 }
+        function divide(arg_0, arg_1) { return arg_0 / arg_1 }
+
+        document.querySelector('.out').textContent = output;
+
+        function operate(op, num_1, num_2) {
+            switch(op) {
+                case '+':
+                    return add(num_1, num_2);
+                    break;
+                case '-':
+                    return subtract(num_1, num_2);
+                    break;
+                case '*':
+                    return muliply(num_1, num_2);
+                    break;
+                case '/':
+                    return divide(num_1, num_2);
+                    break;
+                default:
+                    return 0;
+            }
+        }
+
+
+        </script>
+    </body>
+</html>
